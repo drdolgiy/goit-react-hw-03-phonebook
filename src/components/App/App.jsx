@@ -55,6 +55,26 @@ class App extends Component {
             contact.name.toLowerCase().includes(normalizedFilter));
     };
 
+    componentDidMount() {
+        const contacts = localStorage.getItem('contacts');
+        const parsedContacts = JSON.parse(contacts);
+        
+        if (parsedContacts) {
+            this.setState({ contacts: parsedContacts });
+        }
+    };
+
+    componentDidUpdate(prevProps, prevState) {
+        console.log(prevState);
+        console.log(this.state)
+
+        if (this.state.contacts !== prevState.contacts) {
+            console.log("обновилось поле контактов");
+
+            localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+        };
+    };
+
     render() {
 
         const { filter, contacts } = this.state;
